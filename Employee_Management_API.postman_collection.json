@@ -24,25 +24,15 @@
           "name": "Register",
           "request": {
             "method": "POST",
-            "header": [],
+            "url": "{{baseUrl}}/auth/register",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Ammar Meman\",\n  \"email\": \"ammar@example.com\",\n  \"password\": \"password123\"\n}",
+              "raw": "{\"name\": \"Ammar Meman\", \"email\": \"ammar@example.com\", \"password\": \"password123\"}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/auth/register",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "auth",
-                "register"
-              ]
             }
           }
         },
@@ -50,25 +40,31 @@
           "name": "Login",
           "request": {
             "method": "POST",
-            "header": [],
+            "url": "{{baseUrl}}/auth/login",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"ammar@example.com\",\n  \"password\": \"password123\"\n}",
+              "raw": "{\"email\": \"ammar@example.com\", \"password\": \"password123\"}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/auth/login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "auth",
-                "login"
-              ]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/refresh-token",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"refreshToken\": \"YOUR_REFRESH_TOKEN\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -86,16 +82,32 @@
               ]
             },
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/auth/profile",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "auth",
-                "profile"
+            "url": "{{baseUrl}}/auth/profile"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
               ]
+            },
+            "method": "PATCH",
+            "url": "{{baseUrl}}/auth/profile",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Ammar Updated\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         }
@@ -108,7 +120,6 @@
           "name": "Get All Employees",
           "request": {
             "method": "GET",
-            "header": [],
             "url": {
               "raw": "{{baseUrl}}/employees?page=1&limit=10",
               "host": [
@@ -125,26 +136,6 @@
                 {
                   "key": "limit",
                   "value": "10"
-                },
-                {
-                  "key": "country",
-                  "value": "USA",
-                  "disabled": true
-                },
-                {
-                  "key": "primarySkill",
-                  "value": "Java",
-                  "disabled": true
-                },
-                {
-                  "key": "sort",
-                  "value": "experience",
-                  "disabled": true
-                },
-                {
-                  "key": "order",
-                  "value": "desc",
-                  "disabled": true
                 }
               ]
             }
@@ -154,41 +145,61 @@
           "name": "Get Employee by ID",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/employees/E00001",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "employees",
-                "E00001"
-              ]
-            }
+            "url": "{{baseUrl}}/employees/E00001"
+          }
+        },
+        {
+          "name": "Check Employee Exists",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/employees/exists/E00001"
           }
         },
         {
           "name": "Create Employee",
           "request": {
             "method": "POST",
-            "header": [],
+            "url": "{{baseUrl}}/employees",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"E00001\",\n  \"name\": \"Test Employee\",\n  \"profile\": {\n    \"contact\": {\n      \"email\": \"test@email.com\",\n      \"phone\": \"+1-123456789\",\n      \"address\": {\n        \"street\": \"123 Test St\",\n        \"city\": \"Test City\",\n        \"location\": {\n          \"state\": \"Test State\",\n          \"country\": \"USA\",\n          \"geo\": {\n            \"lat\": \"0.000\",\n            \"long\": \"0.000\",\n            \"timezone\": {\n              \"name\": \"America/New_York\",\n              \"utc_offset\": \"-05:00\"\n            }\n          }\n        }\n      }\n    },\n    \"projects\": [\n        {\n            \"projectId\": \"P1\",\n            \"name\": \"Test Project\",\n            \"tasks\": [\n                {\n                    \"taskId\": \"T1\",\n                    \"description\": \"Task Desc\",\n                    \"assignedTo\": {\n                        \"id\": \"E00001\",\n                        \"name\": \"Test Employee\",\n                        \"skills\": {\n                            \"primary\": \"Java\",\n                            \"secondary\": [\"Spring\"],\n                            \"experience\": {\n                                \"years\": 5,\n                                \"domains\": [\"Backend\"],\n                                \"certifications\": {\n                                    \"current\": [\"AWS\"],\n                                    \"expired\": [],\n                                    \"meta\": {\n                                        \"verified\": true\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            ]\n        }\n    ]\n  }\n}",
+              "raw": "{\"id\": \"E00001\",\"name\": \"Test Employee\",\"profile\": {\"contact\": {\"email\": \"test@email.com\",\"phone\": \"+1-123456789\",\"address\": {\"street\": \"123 Test St\",\"city\": \"Test City\",\"location\": {\"state\": \"Test State\",\"country\": \"USA\",\"geo\": {\"lat\": \"0.000\",\"long\": \"0.000\",\"timezone\": {\"name\": \"America/New_York\",\"utc_offset\": \"-05:00\"}}}}}}}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/employees",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "employees"
-              ]
+            }
+          }
+        },
+        {
+          "name": "Update Employee (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/employees/E00001",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"id\": \"E00001\",\"name\": \"Updated Employee\",\"profile\": {\"contact\": {\"email\": \"updated@email.com\",\"phone\": \"+1-123456789\",\"address\": {\"street\": \"123 Test St\",\"city\": \"Test City\",\"location\": {\"state\": \"Test State\",\"country\": \"USA\",\"geo\": {\"lat\": \"0.000\",\"long\": \"0.000\",\"timezone\": {\"name\": \"America/New_York\",\"utc_offset\": \"-05:00\"}}}}}}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Employee (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/employees/E00001",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Partially Updated Employee\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -196,16 +207,54 @@
           "name": "Delete Employee",
           "request": {
             "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/employees/E00001",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "employees",
-                "E00001"
-              ]
+            "url": "{{baseUrl}}/employees/E00001"
+          }
+        },
+        {
+          "name": "Bulk Create",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/employees/bulk-create",
+            "body": {
+              "mode": "raw",
+              "raw": "[]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Bulk Update",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/employees/bulk-update",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"filter\": {\"profile.contact.address.location.country\": \"USA\"}, \"updateData\": {\"name\": \"Updated Name\"}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Bulk Delete",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/employees/bulk-delete",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"filter\": {\"profile.contact.address.location.country\": \"USA\"}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         }
@@ -218,7 +267,6 @@
           "name": "Search Employees",
           "request": {
             "method": "GET",
-            "header": [],
             "url": {
               "raw": "{{baseUrl}}/search/employees?q=Java",
               "host": [
@@ -246,72 +294,42 @@
           "name": "Top Skills",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/analytics/employees/top-skills",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "analytics",
-                "employees",
-                "top-skills"
-              ]
-            }
+            "url": "{{baseUrl}}/analytics/employees/top-skills"
           }
         },
         {
           "name": "Top Domains",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/analytics/employees/top-domains",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "analytics",
-                "employees",
-                "top-domains"
-              ]
-            }
+            "url": "{{baseUrl}}/analytics/employees/top-domains"
           }
         },
         {
           "name": "Location Distribution",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/analytics/employees/location-distribution",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "analytics",
-                "employees",
-                "location-distribution"
-              ]
-            }
+            "url": "{{baseUrl}}/analytics/employees/location-distribution"
           }
         },
         {
           "name": "Experience Distribution",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/analytics/employees/experience-distribution",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "analytics",
-                "employees",
-                "experience-distribution"
-              ]
-            }
+            "url": "{{baseUrl}}/analytics/employees/experience-distribution"
+          }
+        },
+        {
+          "name": "Project Distribution",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/analytics/employees/project-distribution"
+          }
+        },
+        {
+          "name": "Top Certifications",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/analytics/employees/top-certifications"
           }
         }
       ]
@@ -323,17 +341,7 @@
           "name": "Overview",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/stats/overview",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "stats",
-                "overview"
-              ]
-            }
+            "url": "{{baseUrl}}/stats/overview"
           }
         }
       ]
