@@ -1,0 +1,342 @@
+{
+  "info": {
+    "name": "Employee Management API",
+    "description": "Complete documentation for the Employee Management Analytics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "YOUR_JWT_TOKEN_HERE",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ammar Meman\",\n  \"email\": \"ammar@example.com\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"ammar@example.com\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "profile"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "Get All Employees",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/employees?page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "country",
+                  "value": "USA",
+                  "disabled": true
+                },
+                {
+                  "key": "primarySkill",
+                  "value": "Java",
+                  "disabled": true
+                },
+                {
+                  "key": "sort",
+                  "value": "experience",
+                  "disabled": true
+                },
+                {
+                  "key": "order",
+                  "value": "desc",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Employee by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/employees/E00001",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                "E00001"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Employee",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"E00001\",\n  \"name\": \"Test Employee\",\n  \"profile\": {\n    \"contact\": {\n      \"email\": \"test@email.com\",\n      \"phone\": \"+1-123456789\",\n      \"address\": {\n        \"street\": \"123 Test St\",\n        \"city\": \"Test City\",\n        \"location\": {\n          \"state\": \"Test State\",\n          \"country\": \"USA\",\n          \"geo\": {\n            \"lat\": \"0.000\",\n            \"long\": \"0.000\",\n            \"timezone\": {\n              \"name\": \"America/New_York\",\n              \"utc_offset\": \"-05:00\"\n            }\n          }\n        }\n      }\n    },\n    \"projects\": [\n        {\n            \"projectId\": \"P1\",\n            \"name\": \"Test Project\",\n            \"tasks\": [\n                {\n                    \"taskId\": \"T1\",\n                    \"description\": \"Task Desc\",\n                    \"assignedTo\": {\n                        \"id\": \"E00001\",\n                        \"name\": \"Test Employee\",\n                        \"skills\": {\n                            \"primary\": \"Java\",\n                            \"secondary\": [\"Spring\"],\n                            \"experience\": {\n                                \"years\": 5,\n                                \"domains\": [\"Backend\"],\n                                \"certifications\": {\n                                    \"current\": [\"AWS\"],\n                                    \"expired\": [],\n                                    \"meta\": {\n                                        \"verified\": true\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            ]\n        }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Employee",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/employees/E00001",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                "E00001"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Search Employees",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/search/employees?q=Java",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "search",
+                "employees"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Java"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Top Skills",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/employees/top-skills",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "employees",
+                "top-skills"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Top Domains",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/employees/top-domains",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "employees",
+                "top-domains"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Location Distribution",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/employees/location-distribution",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "employees",
+                "location-distribution"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Experience Distribution",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/employees/experience-distribution",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics",
+                "employees",
+                "experience-distribution"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stats",
+      "item": [
+        {
+          "name": "Overview",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/stats/overview",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stats",
+                "overview"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
