@@ -27,6 +27,14 @@ app.use("/api/v1/stats", statsRoutes);
 // Also mount employees at root for convenience
 app.use("/employees", employeeRoutes);
 
+// Root Welcome Route
+app.get("/", (req, res) => {
+  res.status(200).json({ 
+    success: true, 
+    message: "Welcome to the Employee Management Analytics API! The server is running successfully. Please use /api/v1/* for API requests." 
+  });
+});
+
 // Global Error Handler
 app.use(errorHandler);
 
