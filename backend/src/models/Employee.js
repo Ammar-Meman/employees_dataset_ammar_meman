@@ -178,7 +178,6 @@ const employeeSchema = new mongoose.Schema(
 );
 
 // Indexes for optimized querying
-employeeSchema.index({ id: 1 });
 employeeSchema.index({ name: 1 });
 employeeSchema.index({
   "profile.contact.address.location.country": 1,
